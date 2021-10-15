@@ -1,11 +1,15 @@
 <template>
   <section class="section">
+        <button class="question" @click="getcoins" >Answer this, get rich</button>
         <meta charset=“UTF-8”>
+        <audio ref="incorrect" src="../assets/incorrect.mp3"></audio>
+        <audio ref="correct" src="../assets/correct.mp3"></audio>
         <audio ref="freeze" src="../assets/nioce.mp3"></audio>
         <audio ref="shrek" src="../assets/shrek.mp3"></audio>
         <img src="../assets/face.png" alt="shrek" @click="clicks++;sound()" class="shrekbutton">
-        <h4 class="is-size-4">You have {{displayClicks}} clicks!</h4> 
+        <h4 class="clicks">You have {{displayClicks}} clicks!</h4> 
         <button :disabled="disabled" @click="delay" class="free">Free Clicks</button> 
+        <button :disabled="disabled" @click="time" class="time">tIME bOMB</button> 
         <div class="costs">
         <auto-click class = "hind" 
         v-for="(auto,index) in autoClickers"
@@ -24,13 +28,6 @@
 <script>
 import AutoClick from './AutoClick.vue';
 export default {
-    name: 'your name',
-    beforeCreate () {
-    document.querySelector('body').setAttribute('style', 'background:#B3FEEE')
-    },
-    beforeDestroy () {
-    document.querySelector('body').setAttribute('style', '')
-    },
   components: { AutoClick },
     mounted(){
         setInterval(()=>{
@@ -52,6 +49,16 @@ export default {
         }
     },
     methods: {
+        getcoins(){
+            var que = prompt("How many moni");
+            if(que=="meni") {
+                this.clicks = this.clicks + 10000;
+                this.$refs.correct.play();
+            } else {
+                alert("hah luser");
+                this.$refs.incorrect.play();
+            }
+        },
         sound(){
             this.$refs.shrek.play();
         },
@@ -72,7 +79,9 @@ export default {
         myFunction () {
             this.clicks = this.clicks + 100;
         },
-        
+        time (){
+             this.disabled = true;
+        } 
     },
     computed: {
         displayClicks(){
@@ -83,6 +92,31 @@ export default {
 </script>
 
 <style>
+    html{
+        background-color:#242424 !important;
+    }
+    .time {
+        position:fixed;
+        left: 90%;
+        top: 70%;
+    }
+    .time:disabled{
+        cursor: not-allowed;
+    }
+    .question{
+        position: fixed;
+        top: 80%;
+        background-color: yellow;
+        width: 150px;
+        height: auto;
+        font-size: 20px;
+        border: solid yellow 1px;
+        border-radius: 20px;
+    }
+    .question:hover{
+        transform: scale(1.2);
+        background-color: rgb(255, 255, 129);
+    }
     .shrekbutton {
         height: 300px;
         width: auto;
@@ -95,11 +129,12 @@ export default {
         width: 20%;
         padding-top: 20px;
     }
-    .is-size-4 {
+    .clicks {
         position: fixed;
         top: 44%;
-        left: 44%;
-        color:darkgreen;
+        left: 41%;
+        color:greenyellow;
+        font-size: 40px !important;
     }
     .costs button {
         font-size: 20px;
@@ -112,30 +147,29 @@ export default {
         background-color: lime;
         color: black;
         border: none;
-        height: 200px;
-        width: 200px;
-        border-radius: 200px;
-        font-size: 30px;
+        height: 260px;
+        width: 260px;
+        border-radius: 260px;
+        font-size: 50px;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         float: right;
+        margin-right: 20px;
     }
     .free:disabled {
         opacity: 50%;
+        cursor: not-allowed;
     }
     .free:hover {
         transform: scale(1.3);
     }
-    .button.is-warning[disabled], fieldset[disabled] .button.is-warning{
-        background-color:#e56029;
-    }
     .button.is-warning {
-        background-color: #e56029;
+        background-color: #e56029 !important;
         margin-bottom: 15px;
         width: 500px;
         border: solid #e56029 1px ;
         border-radius: 40px;
     }
-    .button.is-warning.hind:hover {
-        background-color: #e9845a;
+    .button.is-warning:hover {
+        background-color:#f87238 !important;
     }
 </style>
